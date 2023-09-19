@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <!-- mystyle -->
+        <link rel="stylesheet" href="style.css" />
+        <title>MOVIE | Series</title>
+    </head>
+    <body>
+        <!-- navbar -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">MOVIES List</a>
+
+                <form action="">
+                    <div class="input-group">
+                        <input type="text" class="search-input" placeholder="Cari judul film" />
+                        <button type="submit" class="btn-search">Cari</button>
+                    </div>
+                </form>
+            </div>
+        </nav>
+
+        <section>
+            <div class="container-fluid">
+                <div class="content">
+                    <img src="load.gif" class="load" style="display: none" alt="" />
+                    <span>
+                        <a href="#top-rated">Top rated</a> |
+                        <a href="#film-terbaru">Film terbaru</a>
+                    </span>
+                    <h2 id="top-rated">Top Rated</h2>
+                    <hr class="border-content" />
+                    <div class="row" id="top-rated-movie">
+                        <!-- film trending -->
+                    </div>
+                    <hr class="border-content" />
+                    <h2 id="film-terbaru">Film terbaru</h2>
+                    <hr />
+
+                    <div class="row" id="all_film">
+                        <!-- daftar film disini -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+        <script type="text/javascript" src="script.js"></script>
+    </body>
+</html>

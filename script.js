@@ -6,10 +6,50 @@ $(document).ready(function () {
     const TOP_RATED_Movie = "/movie/top_rated";
     const SEARCH_MOVIE = "/search/movie?";
 
+    const VIDEO_MOVIE = "/movie/{movie_id}/videos";
+
+const getVideo = (id) => {
+    $.ajax({
+        url: BASE_URL_TMDB + VIDEO_MOVIE.replace("{movie_id}", id),
+        type: "get",
+        dataType: "json",
+        data: { api_key: API_KEY },
+        success: function (response) {
+            if (response.results.length > 0) {
+                let foundTrailer = false;
+
+                $.each(response.results, function (i, data) {
+                    
+                    if (data.type === "Trailer" && !foundTrailer) {
+                        foundTrailer = true;
+                        const TrailerKey = data.key; // Key untuk YouTube Trailer
+                        const url = `https://www.youtube.com/embed/${TrailerKey}`;
+                        // console.log(url);
+                        $("#video").append(`
+                            <a href="${url}" target="_blank">Lihat Trailer</a>
+                        `);
+                    }
+                });
+
+                if (!foundTrailer) {
+                    $("#video").append(`<p class="text-danger">Trailer tidak tersedia.</p>`);
+                }
+            } else {
+                $("#video").append(`<p class="text-danger">Trailer tidak ditemukan.</p>`);
+            }
+        },
+        error: function () {
+            $("#video").append(`<p class="text-danger">Gagal mengambil Trailer.</p>`);
+        },
+    });
+};
+
+
     // // // function top rate movie
     function TopRatedMovies() {
         $.ajax({
             url: BASE_URL_TMDB + TOP_RATED_Movie,
+           
             type: "get",
             dataType: "json",
             data: {
@@ -23,24 +63,26 @@ $(document).ready(function () {
 
                         $("#top-rated-movie").append(
                             `
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                             <div class="card" >
                                 <img src="${trendingMovie} " class="card-img-top img-zoom"  >
                                     <div class="card-body">
                                         <h5 class="card-title text-center"> ${data.title}</h5>
                                         <p class="card-text">Relaese :  ${data.release_date}</p>
                                         <p class="card-text">Popularity :  ${data.popularity}</p>
+                            
                                 <hr>
                                 </div>
                             </div>
-
-                            `
+`
                         );
                     });
                 }
             },
         });
     }
+ 
+
     // // function list movie
     function list_movie() {
         $.ajax({
@@ -58,13 +100,14 @@ $(document).ready(function () {
                         const posterPath = IMG_URL + data.poster_path;
                         $("#all_film").append(
                             `
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                             <div class="card" >
                                 <img src="${posterPath} " class="card-img-top img-zoom"  >
                                     <div class="card-body">
                                         <h5 class="card-title text-center"> ${data.title}</h5>
                                         <p class="card-text">Relaese :  ${data.release_date}</p>
                                         <p class="card-text">Popularity :  ${data.popularity}</p>
+                                        
                                 <hr>
                                 </div>
                             </div>
@@ -97,13 +140,14 @@ $(document).ready(function () {
                         const posterPath = IMG_URL + data.poster_path;
                         $("#all_film,#top-rated-movie").prepend(
                             `
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                             <div class="card " >
                                 <img src="${posterPath} " class="card-img-top img-zoom"  >
                                     <div class="card-body">
                                         <h5 class="card-title  text-center"> ${data.title}</h5>
                                         <p class="card-text">Relaese :  ${data.release_date}</p>
                                         <p class="card-text">Popularity :  ${data.popularity}</p>
+                                      
                                 <hr>
                                 </div>
                             </div>
@@ -117,6 +161,10 @@ $(document).ready(function () {
             },
         });
     }
+     $(document).on("click", ".btn-video", function () {
+         let movieId = $(this).data("id");
+         getVideo(movieId);
+     });
 
     $(".btn-search").click(function () {
         var input = $(".search-input").val();
